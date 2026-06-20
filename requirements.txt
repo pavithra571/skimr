@@ -7,5 +7,9 @@ langchain-chroma
 langchain-text-splitters
 langgraph
 chromadb
+pysqlite3-binary
 pypdf
 sentence-transformers
+streamlit-authenticator
+pyyaml
+upstash-redis
