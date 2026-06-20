@@ -10,11 +10,35 @@ RUN:  streamlit run app.py
 import os
 import tempfile
 
+# --- sqlite3 shim for Chroma on Streamlit Cloud ---
+# Streamlit Cloud's system sqlite3 is too old for chromadb. pysqlite3-binary
+# ships a newer one; swap it in before chromadb imports. Harmless locally
+# (wrapped in try/except for machines without the package, e.g. Windows).
+try:
+    __import__("pysqlite3")
+    import sys
+    sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
+except Exception:
+    pass
+
 import streamlit as st
+
+# --- bridge Streamlit Cloud secrets into environment variables ---
+# Locally we use real env vars (set/export). On Streamlit Cloud, secrets live in
+# st.secrets instead. Copying them into os.environ here means the rest of the
+# code (Groq, Gmail, Upstash, Chroma) reads them the same way in both places.
+# This must run BEFORE importing rag_graph/auth, which read env vars on import.
+try:
+    for _k, _v in st.secrets.items():
+        if isinstance(_v, str):
+            os.environ.setdefault(_k, _v)
+except Exception:
+    pass  # no secrets file locally — that's fine, we use real env vars
+
 import rag_graph   # our RAG brain
 import auth        # login/signup gate
 
-st.set_page_config(page_title="skimr — paper chat", page_icon="📄", layout="wide")
+st.set_page_config(page_title="Marginalia — paper chat", page_icon="📄", layout="wide")
 
 # ---------- require login before anything else ----------
 # This halts the script and shows login/signup until the user is authenticated.
@@ -32,7 +56,7 @@ if "messages" not in st.session_state:
 
 # ---------- sidebar: upload + paper shelf ----------
 with st.sidebar:
-    st.title("📄 skimr")
+    st.title("📄 Marginalia")
     st.caption(f"Signed in as **{name}**")
     authenticator.logout("Log out", location="sidebar")
     st.divider()
