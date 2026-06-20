@@ -1,0 +1,34 @@
+cookie:
+  expiry_days: 7
+  key: REPLACE_WITH_A_RANDOM_SECRET_STRING
+  name: marginalia_auth
+credentials:
+  usernames:
+    pavi:
+      email: pavi@example.com
+      name: Pavi
+      password: $2b$12$Jr0fugk8RDvnt1H3pz4m/eliddcoSvQOF8IDpAfCmA2FttY240V3W
+    pavithra:
+      email: kpavithrasai@gmail.com
+      first_name: Pavithra
+      last_name: Kadiyala
+      logged_in: false
+      password: $2b$12$x582fF7PqU8nPX7qnPGld.Lw3kesCLtviFjrQZZr66MrfWtyNkc2m
+      password_hint: name
+      roles: null
+    pavithra571:
+      email: kadiyalapavithrasai@gmail.com
+      first_name: Pavithra
+      last_name: Kadiyala
+      logged_in: false
+      password: $2b$12$Hl8m3T87rmNpRty5wYrr7uZSDnSyZveSrNW7hwXBKEm1oBjj.BAvK
+      password_hint: name
+      roles: null
+    varshith:
+      email: varshitreddy02@gmail.com
+      first_name: varshith
+      last_name: sudini
+      logged_in: false
+      password: $2b$12$muNKa7M4eZ/CJeLYkBgVqe6a6YrqUvdul/ywPCuFEH.kmpls.5e2u
+      password_hint: name
+      roles: null
